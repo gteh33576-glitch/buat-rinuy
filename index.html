@@ -3,155 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Surat Cinta 💌</title>
+<title>Surat Untukmu ❤️</title>
 
 <style>
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:Arial, sans-serif;
 }
 
 body{
-    height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#ff6fa5,#ffb6d9,#ffe4ef);
+    height:100vh;
+    background:linear-gradient(135deg,#ff6aa2,#ffd2e7);
     overflow:hidden;
 }
 
 /* Amplop */
 .envelope{
     position:relative;
-    width:260px;
-    height:170px;
+    width:320px;
+    height:220px;
     cursor:pointer;
 }
 
-.base{
+/* Surat */
+.letter{
     position:absolute;
-    width:100%;
-    height:100%;
-    background:#ff7ba8;
-    border-radius:0 0 10px 10px;
+    width:270px;
+    height:170px;
+    left:25px;
+    bottom:35px;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 8px 15px rgba(0,0,0,.2);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+
+    color:#ff2f74;
+    font-size:22px;
+    font-weight:bold;
+
+    /* Disembunyikan di dalam amplop */
+    transform:translateY(130px);
+    transition:1s;
+    z-index:1;
 }
 
-.flap{
+/* Badan amplop */
+.front{
     position:absolute;
+    bottom:0;
     width:100%;
-    height:100%;
-    background:#ff95bb;
-    clip-path:polygon(0 0,50% 55%,100% 0);
-    transform-origin:top;
-    transition:1s;
+    height:170px;
+    background:#ff7cab;
+    border-radius:0 0 12px 12px;
     z-index:3;
 }
 
-.letter{
+/* Penutup amplop */
+.flap{
     position:absolute;
-    left:10%;
-    width:80%;
-    height:140px;
-    background:white;
-    border-radius:10px;
-    padding:20px;
-    text-align:center;
-    top:20px;
+    width:100%;
+    height:120px;
+    background:#ff99bf;
+    clip-path:polygon(0 0,50% 100%,100% 0);
+    transform-origin:top;
     transition:1s;
-    z-index:1;
-    box-shadow:0 10px 20px rgba(0,0,0,.2);
+    z-index:5;
 }
 
-.letter h2{
-    color:#ff2f75;
-    font-size:20px;
-}
-
-.letter p{
-    margin-top:15px;
-    color:#444;
-    font-size:18px;
-    font-weight:bold;
-}
-
+/* Saat dibuka */
 .open .flap{
     transform:rotateX(180deg);
 }
 
 .open .letter{
-    transform:translateY(-140px);
+    transform:translateY(-120px);
 }
 
-/* Love */
-.heart{
-    position:absolute;
-    font-size:25px;
-    animation:fly 4s linear forwards;
-}
-
-@keyframes fly{
-    from{
-        transform:translateY(0) scale(1);
-        opacity:1;
-    }
-    to{
-        transform:translateY(-500px) scale(1.8);
-        opacity:0;
-    }
-}
-
+/* Tulisan klik */
 .info{
     position:absolute;
     bottom:40px;
     color:white;
-    font-size:18px;
-    text-shadow:0 0 10px hotpink;
+    font-size:20px;
+    text-shadow:0 0 8px hotpink;
+}
+
+/* Hati */
+.heart{
+    position:absolute;
+    font-size:22px;
+    animation:fly 4s linear forwards;
+}
+
+@keyframes fly{
+    0%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+
+    100%{
+        opacity:0;
+        transform:translateY(-500px) scale(2);
+    }
 }
 </style>
 </head>
+
 <body>
 
 <div class="envelope" id="envelope">
-    <div class="flap"></div>
-    <div class="base"></div>
 
     <div class="letter">
-        <h2>💌 Surat Untukmu 💌</h2>
-        <p>
-            ❤️<br><br>
-            RINCUL JANGAN MAYAAA MAYAA TERUSS KOCAK
-        </p>
+        ❤️<br><br>
+        RINCUL JANGAN MAYAAA MAYAA TERUSS KOCAK
     </div>
+
+    <div class="front"></div>
+    <div class="flap"></div>
+
 </div>
 
-<div class="info">
-Klik amplopnya ❤️
-</div>
+<div class="info">💌 Klik Amplop</div>
 
 <script>
+
 const envelope=document.getElementById("envelope");
 
-envelope.addEventListener("click",()=>{
+let opened=false;
 
-    envelope.classList.toggle("open");
+envelope.onclick=function(){
 
-    for(let i=0;i<25;i++){
-        const heart=document.createElement("div");
-        heart.className="heart";
-        heart.innerHTML="💖";
+if(opened)return;
 
-        heart.style.left=(window.innerWidth/2+(Math.random()*250-125))+"px";
-        heart.style.top=(window.innerHeight/2+50)+"px";
-        heart.style.fontSize=(20+Math.random()*20)+"px";
+opened=true;
 
-        document.body.appendChild(heart);
+envelope.classList.add("open");
 
-        setTimeout(()=>heart.remove(),4000);
-    }
+/* Efek hati */
 
-});
+for(let i=0;i<35;i++){
+
+let heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML=["❤️","💕","💖","💗"][Math.floor(Math.random()*4)];
+
+heart.style.left=Math.random()*window.innerWidth+"px";
+heart.style.top=(window.innerHeight-80)+"px";
+heart.style.fontSize=(20+Math.random()*25)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},4000);
+
+}
+
+}
+
 </script>
 
 </body>
